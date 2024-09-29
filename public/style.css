@@ -1,0 +1,50 @@
+/* style.css */
+.dashboard-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.block {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: grab;
+}
+
+.workspace-container {
+  position: relative;
+  flex: 1;
+}
+
+.zoom-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.zoom-controls button {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  color: #000000;
+}
+
+/* style.css */
+.workspace {
+  position: relative;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 20px;
+  min-height: 500px;
+  overflow: auto;
+  transform-origin: 0 0; /* A origem do zoom é o canto superior esquerdo */
+}

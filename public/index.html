@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Fluxo de APIs</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="sidebar">
+      <h3>Blocos Disponíveis</h3>
+      <div class="block" draggable="true" data-type="webhook">Webhook</div>
+      <div class="block" draggable="true" data-type="form">Formulário</div>
+      <div class="block" draggable="true" data-type="api">API</div>
+      <div class="block" draggable="true" data-type="transform">Transformação</div>
+      
+    </div>
+
+    <div class="workspace-container">
+      
+      <div class="workspace" id="workspace">
+        <h3>Área de Trabalho</h3>
+        <div class="zoom-controls">
+          <button id="zoom-in">+</button>
+          <button id="zoom-out">-</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/js/jsplumb.min.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>
