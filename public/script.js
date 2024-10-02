@@ -1,5 +1,3 @@
-// script.js
-
 jsPlumb.ready(function() {
   jsPlumb.setContainer('workspace');
 
@@ -34,49 +32,6 @@ jsPlumb.ready(function() {
     workspace.appendChild(newBlock);
 
     makeBlockConnectable(newBlock);
-
-    // Adicionar campos de entrada para o nome do bloco e quantidade de conexões
-    const blockConfig = document.createElement('div');
-    blockConfig.innerHTML = `
-      <label for="nome-bloco">Nome do bloco:</label>
-      <input type="text" id="nome-bloco" value="${blockType}">
-      <br>
-      <label for="conexoes">Quantidade de conexões:</label>
-      <input type="number" id="conexoes" value="1">
-    `;
-    newBlock.appendChild(blockConfig);
-
-    // Adicionar opções de bloco funcional
-    const functionalBlockOptions = document.createElement('div');
-    functionalBlockOptions.innerHTML = `
-      <label for="enviar-whatsapp">Enviar mensagem via WhatsApp:</label>
-      <input type="checkbox" id="enviar-whatsapp">
-      <br>
-      <label for="enviar-email">Enviar mensagem via e-mail:</label>
-      <input type="checkbox" id="enviar-email">
-    `;
-    newBlock.appendChild(functionalBlockOptions);
-
-    // Adicionar campos de entrada para o formulário de envio de mensagem
-    const whatsappForm = document.createElement('div');
-    whatsappForm.innerHTML = `
-      <label for="numero-destinatario">Número do destinatário:</label>
-      <input type="tel" id="numero-destinatario">
-      <br>
-      <label for="mensagem">Mensagem:</label>
-      <textarea id="mensagem"></textarea>
-    `;
-    newBlock.appendChild(whatsappForm);
-
-    const emailForm = document.createElement('div');
-    emailForm.innerHTML = `
-      <label for="email-destinatario">E-mail do destinatário:</label>
-      <input type="email" id="email-destinatario">
-      <br>
-      <label for="mensagem-email">Mensagem:</label>
-      <textarea id="mensagem-email"></textarea>
-    `;
-    newBlock.appendChild(emailForm);
   });
 
   function makeBlockConnectable(block) {
@@ -86,19 +41,18 @@ jsPlumb.ready(function() {
     const commonEndpoint = {
       isSource: true,
       isTarget: true,
-      maxConnections: 1, // Permite conexões ilimitadas
-      connector: ['Flowchart', { curviness: 50 }],
-      endpoint: 'Dot',
-      paintStyle: { fill: '#337ab7', radius: 5 },
-      hoverPaintStyle: { fill: '#5bc0de' },
-      connectorStyle: { stroke: '#5bc0de', strokeWidth: 2 },
-      connectorHoverStyle: { stroke: '#d9534f', strokeWidth: 2 }
+      maxConnections: -1, // Permite conexões ilimitadas
+      //connector: ['Flowchart', { curviness: 1 }],
+      //endpoint: 'Dot',
+      //paintStyle: { fill: '#337ab7', radius: 5 },
+      //hoverPaintStyle: { fill: '#5bc0de' },
+      //connectorStyle: { stroke: '#5bc0de', strokeWidth: 1 },
+      //connectorHoverStyle: { stroke: '#d9534f', strokeWidth: 2 }
     };
 
     // Adicionar pontos de conexão nos lados esquerdo, direito, superior e inferior
     jsPlumb.addEndpoint(block, { anchor: 'TopCenter' }, commonEndpoint);
     jsPlumb.addEndpoint(block, { anchor: 'BottomCenter' }, commonEndpoint);
-    jsPlumb.addEndpoint(block, { anchor: 'RightMiddle' }, commonEndpoint);
   }
 
   // Lidar com a criação de conexões entre blocos
@@ -106,42 +60,20 @@ jsPlumb.ready(function() {
     console.log('Conexão criada:', info.sourceId, '->', info.targetId);
   });
 
-  // Lidar com o formulário de envio de mensagem
-  function lidarComFormulario(event) {
-    event.preventDefault();
+  // Configurar zoom
+  let zoomLevel = 1; // Use 'let' para poder alterar o valor
 
-    // Obtenha os valores do formulário
-    const blockType = event.target.getAttribute('data-type');
-    const nomeBloco = document.querySelector(`#${blockType} #nome-bloco`).value;
-    const quantidadeConexoes = document.querySelector(`#${blockType} #conexoes`).value;
-    const enviarWhatsApp = document.querySelector(`#${blockType} #enviar-whatsapp`).checked;
-    const numeroDestinatario = document.querySelector(`#${blockType} #numero-destinatario`).value;
-    const mensagem = document.querySelector(`#${blockType} #mensagem`).value;
-    const enviarEmail = document.querySelector(`#${blockType} #enviar-email`).checked;
-    const emailDestinatario = document.querySelector(`#${blockType} #email-destinatario`).value;
-    const mensagemEmail = document.querySelector(`#${blockType} #mensagem-email`).value;
+  document.getElementById('zoom-in').addEventListener('click', function() {
+    zoomLevel += 0.1;
+    document.querySelectorAll('#workspace .block').forEach(function(block) {
+      block.style.transform = 'scale(' + zoomLevel + ')';
+    });
+  });
 
-    // Crie o bloco
-    criarBloco(blockType, quantidadeConexoes, nomeBloco, enviarWhatsApp, numeroDestinatario, mensagem, enviarEmail, emailDestinatario, mensagemEmail);
-  }
-
-  function criarBloco(blockType, quantidadeConexoes, nomeBloco, enviarWhatsApp, numeroDestinatario, mensagem, enviarEmail, emailDestinatario, mensagemEmail) {
-    // Implemente a lógica para criar o bloco aqui
-    console.log(`Criando bloco ${nomeBloco} do tipo ${blockType} com ${quantidadeConexoes} conexões`);
-
-    if (enviarWhatsApp) {
-      // Implemente a lógica para enviar mensagem via WhatsApp aqui
-      console.log(`Enviando mensagem via WhatsApp para ${numeroDestinatario}: ${mensagem}`);
-    }
-
-    if (enviarEmail) {
-      // Implemente a lógica para enviar mensagem via e-mail aqui
-      console.log(`Enviando mensagem via e-mail para ${emailDestinatario}: ${mensagemEmail}`);
-    }
-  }
-
-  // Adicione um listener ao formulário
-  document.querySelectorAll('.block').forEach(block => {
-    block.addEventListener('submit', lidarComFormulario);
+  document.getElementById('zoom-out').addEventListener('click', function() {
+    zoomLevel = Math.max(0.1, zoomLevel - 0.1);
+    document.querySelectorAll('#workspace .block').forEach(function(block) {
+      block.style.transform = 'scale(' + zoomLevel + ')';
+    });
   });
 });

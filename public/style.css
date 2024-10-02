@@ -13,7 +13,7 @@
 .block {
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #007bff;
+  background-color: #057cfc;
   color: white;
   border-radius: 4px;
   cursor: grab;
@@ -47,4 +47,6 @@
   min-height: 500px;
   overflow: auto;
   transform-origin: 0 0; /* A origem do zoom é o canto superior esquerdo */
+  width: 1224px;
+  height: 768px;
 }
